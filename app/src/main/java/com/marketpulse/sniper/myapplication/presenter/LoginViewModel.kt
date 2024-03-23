@@ -1,11 +1,15 @@
 package com.marketpulse.sniper.myapplication.presenter
 
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel: LoginPresenter() {
+
+    private val scope = CoroutineScope(Dispatchers.Main)
 
     override val state: MutableStateFlow<LoginState> = MutableStateFlow(LoginState.empty())
     override val effect: MutableSharedFlow<LoginEffect> = MutableSharedFlow(replay = 0)
@@ -27,13 +31,13 @@ class LoginViewModel: LoginPresenter() {
     }
 
     override fun loginSuccess() {
-        viewModelScope.launch {
+        scope.launch {
             effect.emit(LoginEffect.ShowDashboard)
         }
     }
 
     override fun loginFailure(error: Throwable) {
-        viewModelScope.launch {
+        scope.launch {
             effect.emit(LoginEffect.ShowErrorScreen(error.localizedMessage ?: ""))
         }
     }

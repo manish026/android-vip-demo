@@ -13,11 +13,9 @@ sealed interface LoginEffect {
     data class ShowErrorScreen(val error: String): LoginEffect
 }
 
-abstract class LoginPresenter: ViewModel(), KoinScopeComponent {
+abstract class LoginPresenter {
     abstract val state: StateFlow<LoginState>
     abstract val effect: SharedFlow<LoginEffect>
-
-    override var scope: Scope = createScope(this)
 
     abstract fun setInvalidPassword()
     abstract fun setPassword(password: String)
@@ -26,9 +24,4 @@ abstract class LoginPresenter: ViewModel(), KoinScopeComponent {
     abstract fun loginSuccess()
     abstract fun loginFailure(error: Throwable)
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.e("TAG", "onCleared: ")
-        scope.close()
-    }
 }

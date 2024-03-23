@@ -23,8 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.marketpulse.sniper.myapplication.appModule
 import com.marketpulse.sniper.myapplication.domain.login.LoginAction
-import com.marketpulse.sniper.myapplication.domain.login.LoginUseCase
+import com.marketpulse.sniper.myapplication.domain.login.UseCase
 import com.marketpulse.sniper.myapplication.presenter.LoginEffect
+import com.marketpulse.sniper.myapplication.presenter.LoginPresenter
 import com.marketpulse.sniper.myapplication.presenter.LoginState
 import com.marketpulse.sniper.myapplication.ui.theme.MyApplicationTheme
 import com.marketpulse.sniper.myapplication.ui.theme.PaddingLarge
@@ -34,7 +35,7 @@ import org.koin.compose.KoinApplication
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    loginUseCase: LoginUseCase,
+    loginUseCase: UseCase<LoginPresenter, LoginAction>,
     navController: NavHostController
 ) {
     val presenter = loginUseCase.presenter

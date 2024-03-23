@@ -11,17 +11,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.marketpulse.sniper.myapplication.appModule
-import com.marketpulse.sniper.myapplication.domain.login.LoginUseCase
-import com.marketpulse.sniper.myapplication.presenter.LoginViewModel
+import com.marketpulse.sniper.myapplication.domain.login.LoginAction
+import com.marketpulse.sniper.myapplication.domain.login.UseCase
+import com.marketpulse.sniper.myapplication.presenter.LoginPresenter
 import com.marketpulse.sniper.myapplication.ui.theme.MyApplicationTheme
 import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.koinInject
 import org.koin.core.context.startKoin
 
 
@@ -39,8 +40,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = Route.LoginRoute) {
 
                         composable(Route.LoginRoute) {
-                            val vieModel: LoginViewModel = koinViewModel()
-                            val loginUseCase: LoginUseCase = vieModel.scope.get()
+                            val loginUseCase: UseCase<LoginPresenter, LoginAction> = koinUsecase()
                             LoginScreen(navController = navController, loginUseCase = loginUseCase)
                         }
 
@@ -101,4 +101,7 @@ fun NavHostController.navigate(destination: Route) {
         }
     }
 }
+
+@Composable
+inline fun <reified T: ViewModel> koinUsecase() = koinViewModel<T>()
 

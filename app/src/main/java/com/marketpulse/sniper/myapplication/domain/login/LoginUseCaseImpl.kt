@@ -6,7 +6,7 @@ class LoginUseCaseImpl(
     override val presenter: LoginPresenter,
     private val loginInputValidator: LoginInputValidator,
     private val repository: LoginService
-): LoginUseCase {
+): UseCase<LoginPresenter, LoginAction>() {
 
 
     override fun perform(action: LoginAction) {
