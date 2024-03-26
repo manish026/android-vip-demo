@@ -6,8 +6,8 @@ import com.marketpulse.sniper.myapplication.presenter.LoginPresenter
 
 
 @Stable
-abstract class UseCase<Presenter, Action>: ViewModel() {
-    abstract val presenter: Presenter
+interface UseCase<Presenter, Action> {
+    val presenter: Presenter
 
-    abstract fun perform(action: Action)
+    fun perform(action: Action)
 }
